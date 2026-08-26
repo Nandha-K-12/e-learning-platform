@@ -61,7 +61,6 @@ a:hover {
 }
 
 #header .logo {
-  font-family: 'Inter', sans-serif;
   font-size: 22px;
   font-weight: 700;
   letter-spacing: -0.5px;
@@ -76,7 +75,7 @@ a:hover {
   list-style: none;
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 16px;
 }
 
 #header .menu li a {
@@ -84,7 +83,7 @@ a:hover {
   border-radius: 6px;
   background: rgba(255, 255, 255, 0.1);
   font-weight: 500;
-  transition: background 0.2s ease, transform 0.1s ease;
+  transition: background 0.2s ease;
 }
 
 #header .menu li a:hover {
@@ -95,14 +94,20 @@ a:hover {
 /* Main Content Container */
 #content {
   flex: 1;
-  max-width: 900px;
+  max-width: 1140px;
   width: 100%;
-  margin: 40px auto;
-  padding: 0 20px;
+  margin: 36px auto;
+  padding: 0 24px;
+}
+
+#content::after {
+  content: "";
+  display: table;
+  clear: both;
 }
 
 h1 {
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 700;
   color: #0f172a;
   margin-bottom: 24px;
@@ -110,30 +115,192 @@ h1 {
 }
 
 h2 {
-  font-size: 20px;
+  font-size: 19px;
   font-weight: 600;
-  margin-bottom: 16px;
+  margin-bottom: 18px;
+  color: #1e293b;
 }
 
-/* Module / Card Containers (Login, Forms, Content) */
+/* Sidebar Layout (.contents) */
+.contents {
+  float: left;
+  width: 260px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  margin-right: 24px;
+  margin-bottom: 24px;
+}
+
+.contents h3 {
+  font-size: 13px;
+  font-weight: 700;
+  color: #64748b;
+  margin-bottom: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+#modules {
+  list-style: none;
+  margin-bottom: 14px;
+}
+
+#modules li {
+  margin-bottom: 6px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+#modules li a {
+  display: block;
+  padding: 10px 14px;
+  color: var(--text-main);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 8px;
+  background-color: transparent;
+  transition: background 0.15s ease;
+}
+
+#modules li a span {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+#modules li:hover a {
+  background-color: #f1f5f9;
+}
+
+#modules li.selected a {
+  background-color: var(--primary);
+  color: #ffffff;
+}
+
+#modules li.selected a span {
+  color: #c7d2fe;
+}
+
+/* Main Area Card / Module Container */
 .module {
   background: var(--card-bg);
   border: 1px solid var(--border-color);
   border-radius: 12px;
-  padding: 32px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
-  margin-bottom: 30px;
+  padding: 28px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  margin-bottom: 24px;
+}
+
+/* When .contents sidebar is on the page, make .module fill the right column cleanly */
+.contents + .module,
+.contents ~ .module {
+  overflow: hidden;
 }
 
 .module > p {
   color: var(--text-muted);
-  margin-bottom: 20px;
+  margin-bottom: 18px;
   font-size: 15px;
 }
 
-/* Form Styles */
+/* Course Items / Info Cards */
+.course-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background: #f8fafc;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  margin-bottom: 14px;
+  transition: all 0.2s ease;
+}
+
+.course-info:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.course-info h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0;
+}
+
+.course-info h3 a {
+  color: #1e293b;
+}
+
+.course-info h3 a:hover {
+  color: var(--primary);
+}
+
+.course-info p {
+  display: flex;
+  gap: 10px;
+  margin: 0;
+}
+
+.course-info p a {
+  padding: 6px 14px;
+  font-size: 13px;
+}
+
+/* Module Contents List & Drag and Drop Items */
+#module-contents .item {
+  background: #f8fafc;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-bottom: 14px;
+  cursor: grab;
+  transition: all 0.2s ease;
+}
+
+#module-contents .item:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+#module-contents .item:active {
+  cursor: grabbing;
+}
+
+/* UI Sortable Helper & Placeholder */
+.ui-sortable-placeholder {
+  background: #e2e8f0 !important;
+  border: 2px dashed #94a3b8 !important;
+  visibility: visible !important;
+  height: 50px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.ui-sortable-helper {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Content Type Buttons */
+.content-types {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.content-types li a {
+  display: inline-block;
+}
+
+/* Forms */
 .form-details {
-  margin-top: 20px;
+  margin-top: 16px;
 }
 
 form p {
@@ -192,7 +359,7 @@ input[type="checkbox"] {
   vertical-align: middle;
 }
 
-/* Submit and Buttons */
+/* Buttons */
 input[type="submit"],
 .button,
 a.button {
@@ -200,15 +367,14 @@ a.button {
   background-color: var(--primary);
   color: #ffffff;
   border: none;
-  padding: 10px 24px;
-  font-size: 15px;
+  padding: 9px 20px;
+  font-size: 14px;
   font-weight: 600;
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
   text-decoration: none;
   text-align: center;
-  align-self: flex-start;
 }
 
 input[type="submit"]:hover,
@@ -225,6 +391,46 @@ a.button:active {
   transform: translateY(1px);
 }
 
+.button-secondary,
+a.button-secondary {
+  background-color: #64748b;
+}
+
+.button-secondary:hover,
+a.button-secondary:hover {
+  background-color: #475569;
+  box-shadow: 0 4px 10px rgba(100, 116, 139, 0.25);
+}
+
+.button-danger,
+a.button-danger {
+  background-color: var(--error-color);
+}
+
+.button-danger:hover,
+a.button-danger:hover {
+  background-color: #dc2626;
+  box-shadow: 0 4px 10px rgba(239, 68, 68, 0.25);
+}
+
+/* Form Errors */
+.errorlist {
+  list-style: none;
+  padding: 10px 14px;
+  margin: 8px 0 16px 0;
+  background-color: var(--error-bg);
+  border-left: 4px solid var(--error-color);
+  border-radius: 4px;
+  color: var(--error-color);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.helptext {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
 
 /* Formset Styling */
 .formset-container form > div,
@@ -263,212 +469,16 @@ a.button:active {
   background-color: #f8fafc;
 }
 
-
-/* Button Variants */
-.button-secondary,
-a.button-secondary {
-  background-color: #64748b;
-}
-
-.button-secondary:hover,
-a.button-secondary:hover {
-  background-color: #475569;
-  box-shadow: 0 4px 10px rgba(100, 116, 139, 0.25);
-}
-
-.button-danger,
-a.button-danger {
-  background-color: var(--error-color);
-}
-
-.button-danger:hover,
-a.button-danger:hover {
-  background-color: #dc2626;
-  box-shadow: 0 4px 10px rgba(239, 68, 68, 0.25);
-}
-
-/* Course Management List Items */
-.course-info {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px 20px;
-  background: #f8fafc;
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  margin-bottom: 14px;
-  transition: all 0.2s ease;
-}
-
-.course-info:hover {
-  background: #f1f5f9;
-  border-color: #cbd5e1;
-}
-
-.course-info h3 {
-  font-size: 17px;
-  font-weight: 600;
-  color: #1e293b;
-  margin: 0;
-}
-
-.course-info p {
-  display: flex;
-  gap: 10px;
-  margin: 0;
-}
-
-.course-info p a {
-  padding: 6px 14px;
-  font-size: 13px;
-}
-
-/* Form Errors & Error Lists */
-.errorlist {
-  list-style: none;
-  padding: 10px 14px;
-  margin: 8px 0 16px 0;
-  background-color: var(--error-bg);
-  border-left: 4px solid var(--error-color);
-  border-radius: 4px;
-  color: var(--error-color);
-  font-size: 14px;
-  font-weight: 500;
-}
-
-/* Two Column Layout (Sidebar + Main Area) */
-.contents {
-  float: left;
-  width: 280px;
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-  margin-right: 30px;
-  margin-bottom: 30px;
-}
-
-.contents h3 {
-  font-size: 16px;
-  font-weight: 700;
-  color: #334155;
-  margin-bottom: 16px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-#modules {
-  list-style: none;
-  margin-bottom: 20px;
-}
-
-#modules li {
-  margin-bottom: 8px;
-  border-radius: 8px;
-  border: 1px solid transparent;
-  transition: all 0.2s ease;
-  cursor: grab;
-}
-
-#modules li:active {
-  cursor: grabbing;
-}
-
-#modules li a {
-  display: block;
-  padding: 10px 14px;
-  color: var(--text-main);
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 500;
-  border-radius: 8px;
-}
-
-#modules li a span {
-  font-size: 12px;
-  color: var(--text-muted);
-  font-weight: 600;
-  text-transform: uppercase;
-}
-
-#modules li:hover {
-  background: #f1f5f9;
-  border-color: #cbd5e1;
-}
-
-#modules li.selected {
-  background: var(--primary);
-  border-color: var(--primary);
-}
-
-#modules li.selected a {
-  color: #ffffff;
-}
-
-#modules li.selected a span {
-  color: #c7d2fe;
-}
-
-/* Module Contents List & Drag and Drop Items */
-#module-contents .item {
-  background: #f8fafc;
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  padding: 16px 20px;
-  margin-bottom: 14px;
-  cursor: grab;
-  transition: all 0.2s ease;
-}
-
-#module-contents .item:hover {
-  background: #f1f5f9;
-  border-color: #cbd5e1;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-}
-
-#module-contents .item:active {
-  cursor: grabbing;
-}
-
-/* UI Sortable Helper & Placeholder */
-.ui-sortable-placeholder {
-  background: #e2e8f0 !important;
-  border: 2px dashed #94a3b8 !important;
-  visibility: visible !important;
-  height: 50px;
-  border-radius: 8px;
-  margin-bottom: 12px;
-}
-
-.ui-sortable-helper {
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15) !important;
-}
-
-/* Content Type Buttons */
-.content-types {
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.content-types li a {
-  display: inline-block;
-}
-
-.helptext {
-  font-size: 13px;
-  color: var(--text-muted);
-  margin-top: 4px;
-}
-
-
-
 /* Responsive */
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   #header {
     padding: 14px 20px;
+  }
+  
+  .contents {
+    float: none;
+    width: 100%;
+    margin-right: 0;
   }
   
   #content {
@@ -478,5 +488,11 @@ a.button-danger:hover {
   
   .module {
     padding: 20px;
+  }
+  
+  .course-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
   }
 }

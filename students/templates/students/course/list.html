@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}My courses{% endblock %}
+
+{% block content %}
+  <h1>My courses</h1>
+  <div class="module">
+    {% for course in object_list %}
+      <div class="course-info">
+        <div>
+          <h3>{{ course.title }}</h3>
+          <p style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">
+            Subject: <a href="{% url "course_list_subject" course.subject.slug %}">{{ course.subject }}</a> •
+            Instructor: {{ course.owner.get_full_name|default:course.owner.username }} •
+            {{ course.modules.count }} module{{ course.modules.count|pluralize }}
+          </p>
+        </div>
+        <a href="{% url "student_course_detail" course.id %}" class="button">Access contents</a>
+      </div>
+    {% empty %}
+      <p style="color: var(--text-muted); font-size: 15px;">
+        You are not enrolled in any courses yet.
+        <a href="{% url "course_list" %}">Browse courses</a> to enroll in a course.
+      </p>
+    {% endfor %}
+  </div>
+{% endblock %}
