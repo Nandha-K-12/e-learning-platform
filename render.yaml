@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: educa-elearn
+    runtime: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn elearn.wsgi:application"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.0
