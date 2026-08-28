@@ -15,13 +15,24 @@ ADMINS = [
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-prod-key-change-in-env')
 
 # Allowed hosts
-ALLOWED_HOSTS = ['.onrender.com', 'localhost', '127.0.0.1', '*']
-if 'DJANGO_ALLOWED_HOSTS' in os.environ:
-    ALLOWED_HOSTS = [host.strip() for host in os.environ['DJANGO_ALLOWED_HOSTS'].split(',') if host.strip()]
+ALLOWED_HOSTS = ['*']
+
+raw_hosts = os.environ.get('DJANGO_ALLOWED_HOSTS', '')
+if raw_hosts:
+    ALLOWED_HOSTS = [
+        host.strip().replace('*.', '.')
+        for host in raw_hosts.split(',')
+        if host.strip()
+    ]
+    if '*' in raw_hosts:
+        ALLOWED_HOSTS.append('*')
 
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME and RENDER_EXTERNAL_HOSTNAME not in ALLOWED_HOSTS:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+
+# Trust Render SSL Proxy Header
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 CSRF_TRUSTED_ORIGINS = [
     'https://*.onrender.com',
