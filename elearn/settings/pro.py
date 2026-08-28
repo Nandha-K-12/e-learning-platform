@@ -14,18 +14,23 @@ ADMINS = [
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-prod-key-change-in-env')
 
-# Allowed hosts parsed from environment or defaults
-ALLOWED_HOSTS = [
-    host.strip()
-    for host in os.environ.get('DJANGO_ALLOWED_HOSTS', '*').split(',')
-    if host.strip()
-]
+# Allowed hosts
+ALLOWED_HOSTS = ['.onrender.com', 'localhost', '127.0.0.1', '*']
+if 'DJANGO_ALLOWED_HOSTS' in os.environ:
+    ALLOWED_HOSTS = [host.strip() for host in os.environ['DJANGO_ALLOWED_HOSTS'].split(',') if host.strip()]
+
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+if RENDER_EXTERNAL_HOSTNAME and RENDER_EXTERNAL_HOSTNAME not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 CSRF_TRUSTED_ORIGINS = [
     'https://*.onrender.com',
     'https://*.railway.app',
     'https://*.up.railway.app',
 ]
+if RENDER_EXTERNAL_HOSTNAME:
+    CSRF_TRUSTED_ORIGINS.append(f'https://{RENDER_EXTERNAL_HOSTNAME}')
+
 
 DATABASES = {
     'default': {
