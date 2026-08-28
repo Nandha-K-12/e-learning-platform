@@ -1,1 +1,1 @@
-web: python manage.py migrate && gunicorn elearn.wsgi:application
+web: daphne -b 0.0.0.0 -p $PORT elearn.asgi:application
